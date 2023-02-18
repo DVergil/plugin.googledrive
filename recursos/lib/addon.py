@@ -106,7 +106,7 @@ class GoogleDriveAddon(CloudDriveAddon):
         self._provider.get_item(item_driveid, item_id)
         request = Request('https://drive.google.com/get_video_info', urllib.parse.urlencode({'docid' : item_id}), {'authorization': 'Bearer %s' % self._provider.get_access_tokens()['access_token']})
         response_text = request.request()
-        response_params = dict(urllib.parse.parse_qsl(response_text))
+        response_params = dict(urllib.parse.parse_qsl(response_text.decode('ASCII')))
         if not auto:
             self._progress_dialog.close()
         if Utils.get_safe_value(response_params, 'status', '') == 'ok':
